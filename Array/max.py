@@ -1,13 +1,14 @@
 """
 Basic algorithm
 ---------------------
-Consider,
+1. Set maximum to lowest possible value
+2. Iterate through array.
+3. If array_element > maximum
+    3.1 maximum := array_element
+    3.2 Go to 2.
+4. Return the last value of maximum
 
-A = Array containing i elements.
-N = size of array.
-
-1. for i = 0 to floor(N/2)
-    1.1. Swap ith and (N - i - 1)st element
+It will contain the largest element in the array
 
 """
 
