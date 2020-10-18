@@ -1,14 +1,41 @@
-
 class SingleLinkedList:
-
     nodes = None
+
+    size = 0
 
     class Node:
         def __init__(self, data):
             self.data = data
             self.next = None
 
-    def prepend(self, data):
+    def insert_data_after_index(self, data, index):
+        """
+        O(N): Time, O(1) Space
+        1. Time complexity is O(N) worst-case
+        2. Space complexity is O(1) because we're allocating just one memory location for the node.
+        :param data:
+        :param index:
+        :return:
+        """
+
+        if index <= 0:
+            self.prepend_and_increment_size(data)
+        elif index >= self.size:
+            self.append_and_increment_size(self, data)
+        else:
+            index_counter = 0
+            node = SingleLinkedList.Node(data)
+            temp_node = self.nodes
+            while index_counter < index:
+                temp_node = temp_node.next
+                index_counter += 1
+            current_next = temp_node.next
+            temp_node.next = node
+            node.next = current_next
+        self.increment_size()
+
+
+    def prepend_and_increment_size(self, data):
         """
         O(1) Time/Space.
             1. Time: We are prepending an element to the front of the linkedlist so O(1).
@@ -23,8 +50,9 @@ class SingleLinkedList:
             current_first_node = self.nodes
             node.next = current_first_node
             self.nodes = node
+        self.increment_size()
 
-    def append(self, data):
+    def append_and_increment_size(self, data):
         """
         O(N) Time, O(1) Space
         1. Time: We are iterating through N-1 nodes to get to the Nth node to append data after that node.
@@ -40,7 +68,14 @@ class SingleLinkedList:
             while temp_node.next is not None:
                 temp_node = temp_node.next
             temp_node.next = node
-        return node
+
+        self.increment_size()
+
+    def increment_size(self):
+        self.size += 1
+
+    def decrement_size(self):
+        self.size -= 1
 
     def traverse(self):
         """
@@ -58,7 +93,7 @@ class SingleLinkedList:
 
         return node_list
 
-    def delete_data(self, data):
+    def delete_data_and_decrement_size(self, data):
         """
         1. Time Complexity: O(N)
           --> We do N lookups to find the data to delete
@@ -70,6 +105,7 @@ class SingleLinkedList:
         """
         if self.nodes.data == data:
             self.nodes = self.nodes.next
+            self.decrement_size()
             return True
         temp_node = self.nodes
         prev_node = None
@@ -81,7 +117,9 @@ class SingleLinkedList:
         if temp_node is not None:
             prev_node.next = temp_node.next
             temp_node = None
+            self.decrement_size()
             return True
+
         return False
 
 
@@ -89,7 +127,9 @@ if __name__ == '__main__':
     A = [1, 2, 3, 4, 5]
     slist = SingleLinkedList()
     for loop_ctr in range(0, len(A)):
-        slist.append(A[loop_ctr])
-    slist.prepend(3)
-    print(slist.delete_data(3))
+        slist.append_and_increment_size(A[loop_ctr])
+    slist.prepend_and_increment_size(3)
+    print(slist.delete_data_and_decrement_size(3))
+    print(slist.insert_data_after_index(3.5, 2))
     print(slist.traverse())
+    print(slist.size)
