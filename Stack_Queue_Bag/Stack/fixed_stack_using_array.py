@@ -1,5 +1,6 @@
 """
 ADT for a Stack of fixed size Using an array
+
 Space/Time complexity: O(1) each
 """
 class FixedStackOfElements:
