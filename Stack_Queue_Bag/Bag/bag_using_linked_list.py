@@ -1,3 +1,15 @@
+"""
+Concept
+-------
+1. Similar to a Stack. Only has add method.
+2. Not allowed to remove elements from the Bag.
+
+Time-Complexity
+--------------
+
+
+
+"""
 class Bag:
     first = None
     N = 0
