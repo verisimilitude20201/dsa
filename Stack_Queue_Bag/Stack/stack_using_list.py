@@ -1,6 +1,9 @@
 """
 Stack that uses an underlying list for implementation (Adapter Pattern)
-Time/Space complexity for all operations O(1) / O(1)
+
+Time: O(1) is amortized. 
+Space: O(N) we use a N-element list.
+
 """
 
 
