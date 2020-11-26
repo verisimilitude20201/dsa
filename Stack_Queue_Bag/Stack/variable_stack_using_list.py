@@ -61,7 +61,7 @@ Complexity
 O(1) Space/Time
 
 """
-class Stack:
+class Stack1:
     N = 0
     first = None
 
@@ -101,3 +101,47 @@ if __name__ == '__main__':
     while not stack.is_empty():
         print(stack.pop())
 
+
+class Stack2:
+    class Node:
+        def __init__(self, data):
+            self.data = data
+            self.next = None
+
+    def __init__(self):
+        self.head = None
+
+    def push(self, data):
+        new_node = self.Node(data)
+        if self.head is None:
+            self.head = new_node
+        else:
+            new_node.next = self.head
+            self.head = new_node
+
+    def pop(self):
+        if self.is_empty():
+            raise Exception("Empty Stack")
+        first_node = self.head
+        self.head = self.head.next
+        return first_node.data
+
+    def peek(self):
+        if self.is_empty():
+            raise Exception("Empty Stack")
+        return self.head.data
+
+    def is_empty(self):
+        return self.head is None
+
+
+stack = Stack()
+stack.push(1)
+stack.push(1)
+stack.push(2)
+stack.push(3)
+stack.push(4)
+print(stack.peek())
+print(stack.pop())
+print(stack.pop())
+print(stack.pop())

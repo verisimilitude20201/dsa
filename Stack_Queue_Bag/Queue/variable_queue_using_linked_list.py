@@ -56,49 +56,50 @@ Complexity
 O(1) Space/Time
 """
 class Queue:
-    first = None
-    N = 0
-    last = None
-
     class Node:
         def __init__(self, data):
             self.data = data
             self.next = None
 
-    def is_empty(self):
-        return self.first is None
+    def __init__(self):
+        self._head = None
+        self._tail = None
 
     def enqueue(self, data):
-        old_last = self.last
-        self.last = self.Node(data)
-        if self.is_empty():
-            self.first = self.last
+        new_node = self.Node(data)
+        if self._tail is None:
+            self._tail = new_node
+            self._head = self._tail
         else:
-            old_last.next = self.last
-
-        self.N += 1
-
+            self._tail.next = new_node
+            self._tail = new_node
 
     def dequeue(self):
+        if self.is_empty():
+            raise Exception("Empty Queue")
+        first_node = self._head
 
-        data = self.first.data
-        self.first = self.first.next
-        self.N -= 1
+        self._head = self._head.next
 
-        return data
+        return first_node.data
 
-    def get_size(self):
-        return self.N
+    def peek(self):
+        if self.is_empty():
+            raise Exception("Empty Stack")
+        return self._head.data
 
+    def is_empty(self):
+        return self._head is None
 
 if __name__ == '__main__':
-    A = [1, 2, 3, 4, 5]
-    queue = Queue()
-    for loop_ctr in range(0, len(A)):
-        queue.enqueue(A[loop_ctr])
-
-    while not queue.is_empty():
-        print(queue.dequeue())
+    myQueue = Queue()
+    myQueue.enqueue("Matt")
+    myQueue.enqueue("Powel")
+    myQueue.enqueue("Tim")
+    myQueue.enqueue("Jim")
+    print(myQueue.peek())
+    while not myQueue.is_empty():
+        print(myQueue.dequeue())
 
 
 
