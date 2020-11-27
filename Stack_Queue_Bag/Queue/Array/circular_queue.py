@@ -17,7 +17,7 @@ Main conditions
 
 Complexity:
 ----------
-Time: O(2N) ~ O(N): We are traversing the array both ways front and rear. Since we ignore the constants, this has a linear time complexity.
+Time: O(1) ~ O(N): We are traversing the array both ways front and rear. Since we ignore the constants, this has a linear time complexity.
 Space: O(N): Where N is the size of the queue.
 
 Advantages
