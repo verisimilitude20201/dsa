@@ -13,12 +13,27 @@ from map import UnsortedMap
 
 
 class HashMapPython:
+    class Item:
+        def __init__(self, key, value):
+            self._key = key
+            self._value = value
+
+        def __eq__(self, other):
+            return self._key == other.__key
+
+        def __ne__(self, other):
+            return not (self == other)
+
+        def __lt__(self, other):
+            return self._key < self._value
+
     def __init__(self, capacity=11, p=113):
         self.n = 0
         self._table = [None] * capacity
         self._scale = 1 + randrange(p - 1)
         self._shift = randrange(p)
         self._prime = p
+
 
     def _bucket_getitem(self, j, k):
         bucket = self._table[j]
