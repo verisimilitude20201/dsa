@@ -64,6 +64,10 @@ class Queue:
     def __init__(self):
         self._head = None
         self._tail = None
+        self._n = 0
+    
+    def __len(self):
+        return self._n
 
     def enqueue(self, data):
         new_node = self.Node(data)
@@ -73,6 +77,7 @@ class Queue:
         else:
             self._tail.next = new_node
             self._tail = new_node
+        self._n += 1
 
     def dequeue(self):
         if self.is_empty():
@@ -80,6 +85,7 @@ class Queue:
         first_node = self._head
 
         self._head = self._head.next
+        self._n -= 1
 
         return first_node.data
 
