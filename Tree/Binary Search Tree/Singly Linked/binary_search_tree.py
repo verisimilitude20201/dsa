@@ -2,13 +2,27 @@ import json
 import jsonpickle
 
 """
-Iterative Approach - BST
+Binary Search Tree
 -----------------------
+
+Sample Tree
+
+         9
+    4			20
+
+1	   6	15		170
+
 
 Complexity
 ----------
 1. O(log N) Time: Amortized. Assuming that the BST is balanced
 2. O(N): Space complexity
+3. O(N): Space/Time for BFS. Also the queue for simplicity is a list, not recommended to use a
+list as a queue because list.pop(0) causes all elements to shift to the left.
+4. DFS - Tree traversals Preorder, in order and post order: 
+    O(log(N)) Space 
+    O(N) Time
+    
 """
 
 
@@ -40,6 +54,64 @@ class BinarySearchTree:
                         break
                     current_node = current_node._right
 
+    def iterative_bfs(self):
+        queue = []
+        current_node = self._root
+        queue.append(current_node)
+        while len(queue) > 0:
+            node = queue.pop(0)
+            print(node._data)
+            if node._left is not None:
+                queue.append(node._left)
+            if node._right is not None:
+                queue.append(node._right)
+
+    def recursive_bfs(self, queue):
+        if len(queue) == 0:
+            return
+        node = queue.pop(0)
+        print(node._data)
+        if node._left is not None:
+            queue.append(node._left)
+        if node._right is not None:
+            queue.append(node._right)
+        return self.recursive_bfs(queue)
+
+    def recursive_pre_order_dfs(self, node):
+        if node is None:
+            return
+        print(node._data)
+        if node._left is not None:
+            self.recursive_pre_order_dfs(node._left)
+        if node._right is not None:
+            self.recursive_pre_order_dfs(node._right)
+
+    def recursive_in_order_dfs(self, node):
+        if node is None:
+            return
+        if node._left is not None:
+            self.recursive_in_order_dfs(node._left)
+
+        print(node._data)
+
+        if node._right is not None:
+            self.recursive_in_order_dfs(node._right)
+
+    def recursive_post_order_dfs(self, node):
+        if node is None:
+            return
+        if node._left is not None:
+            self.recursive_post_order_dfs(node._left)
+
+        if node._right is not None:
+            self.recursive_post_order_dfs(node._right)
+
+        print(node._data)
+
+
+    def get_root(self):
+        return self._root
+
     def lookup(self, value):
         if self._root is None:
             return None
@@ -69,7 +141,8 @@ class BinarySearchTree:
             self._change_prev_node_to_node_after_current(self, prev_node, current_node)
         # Delete node with two-children
         else:
-            inorder_sucessor_node, prev_inorder_sucessor_node = self._lookup_prev_node_and_smallest_node_in_right_subtree(current_node)
+            inorder_sucessor_node, prev_inorder_sucessor_node = self._lookup_prev_node_and_smallest_node_in_right_subtree(
+                current_node)
             current_node._data = inorder_sucessor_node._data
             self._delete_leaf_node_and_make_previous_as_leaf(prev_inorder_sucessor_node, inorder_sucessor_node)
 
@@ -125,8 +198,13 @@ bst.insert(20)
 bst.insert(170)
 bst.insert(15)
 bst.insert(1)
-bst.remove(9)
-#bst.remove(1)
+# bst.remove(9)
+# bst.remove(1)
 
 serialized = jsonpickle.encode(bst)
-print(json.dumps(json.loads(serialized), indent=2))
+#bst.iterative_bfs()
+#bst.recursive_pre_order_dfs(bst.get_root())
+bst.recursive_in_order_dfs(bst.get_root())
+#bst.recursive_post_order_dfs(bst.get_root())
+
+# print(json.dumps(json.loads(serialized), indent=2))

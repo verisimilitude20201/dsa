@@ -155,6 +155,7 @@ Complexity
 ---------
 Time: O(m + n)
 Space: O(1)
+\
 """
 def failure_function(P):
     m = len(P)
