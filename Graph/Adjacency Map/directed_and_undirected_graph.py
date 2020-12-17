@@ -1,3 +1,22 @@
+"""
+Simple Graph using Adjacency Map
+
+Complexity:
+Space - O(n + m) where n is the number of vertices, m is the number of edges
+Time for each operation
+
+    insert_edge() ---> O(1)
+    insert_vertex() ---> O(1)
+    vertex_count() ---> O(1)
+    edge_count() --> O(n) (We have used a for-loop with the vertices)
+    get_vertices() --> O(m)
+    get_edge(u, v) --> O(1)
+    incident_edge(v) --> O(degree(v))
+
+
+"""
+
+
 class Graph:
     class Vertex:
 
@@ -9,6 +28,9 @@ class Graph:
 
         def element(self):
             return self._element
+
+        def __str__(self):
+            return str(self._element)
 
     class Edge:
         def __init__(self, origin, destination, element):
@@ -28,6 +50,9 @@ class Graph:
         def __hash__(self):
             return hash((self._origin, self._destination))
 
+        def __str__(self):
+            return str(self._element)
+
     def __init__(self, directed=False):
         self._outgoing = {}
         self._incoming = {} if directed else self._outgoing
@@ -37,6 +62,8 @@ class Graph:
         self._outgoing[vertex] = {}
         if self.is_directed():
             self._incoming[vertex] = {}
+
+        return vertex
 
     def insert_edge(self, origin, destination, element):
         edge = self.Edge(origin, destination, element)
@@ -57,19 +84,19 @@ class Graph:
         for vertex in self.get_vertices():
             edge_count += len(self._outgoing[vertex])
 
-        return edge_count if self.is_directed else edge_count // 2
+        return edge_count if self.is_directed() else edge_count // 2
 
     def edges(self):
-        for vertex in self.get_vertices():
-            for edge in self._outgoing[vertex]:
-                yield edge
+        for origin_vertex in self.get_vertices():
+            for destination_vertex in self._outgoing[origin_vertex]:
+                yield self._outgoing[origin_vertex][destination_vertex]
 
     def get_edge(self, origin, destination):
         return self._outgoing[origin][destination]
 
     def incident_edges(self, v):
         adj = self._incoming if self.is_directed() else self._outgoing
-        for edge in self._adj[v]:
+        for edge in adj[v].values():
             yield edge
 
     def out_degree(self, v):
@@ -82,3 +109,7 @@ class Graph:
 
         adj = self._incoming
         return len(adj[v])
+
+
+if __name__ == "__main__":
+    pass
