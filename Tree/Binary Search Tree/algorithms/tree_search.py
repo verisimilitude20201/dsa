@@ -26,7 +26,7 @@ def tree_search(key):
         if p.right() is not None and p.key > key
             return search_bst(p.right, key)
         
-        return None
+        return p
 
     return search_bst(root, key)    
     
