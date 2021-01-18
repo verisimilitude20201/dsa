@@ -1,3 +1,21 @@
+"""
+Problem:
+--------
+Dynamic array implementation in Python
+
+Complexity
+----------
+Space: O(N)
+Time:
+    __len__ -> O(1)
+    __resize__ -> O(capacity)
+    __append__ -> O(1) amortized / O(N) worst case
+    __getitem__ --> O(1)
+    __setitem__ --> O(1)
+    __delitem__ --> O(1)
+    
+"""
+
 import ctypes
 
 
@@ -26,5 +44,24 @@ class DynamicArray:
     def __getitem__(self, index):
         return self._A[index]
 
-    def _make_array(c):
+    def _make_array(self, c):
         return (c * ctypes.py_object)()
+
+    def __delitem__(self, key):
+        self._A[key] = None
+        if len(self) <= self._capacity // 2:
+            self._resize(self._capacity // 2)
+
+        self._N -= 1
+
+da = DynamicArray()
+da.append(1)
+da.append(2)
+da.append(3)
+da.append(4)
+print(da.__getitem__(3))
+print(len(da))
+del da[3]
+del da[2]
+print(len(da))
+print(da.__getitem__(3))
